@@ -1,0 +1,63 @@
+main: me.dkim19375.mobaicontroller.MobAIController
+name: MobAIController
+version: ${pluginVersion}
+description: Control mob's AI!
+author: dkim19375
+depend: [  ]
+
+commands:
+  mobaicontroller:
+    description: Main command
+    usage: /mobaicontroller help|spawn <mob type>|list|reload|remove <uuid>
+    aliases:
+      - mobai
+
+permissions:
+  mobaicontroller.all:
+    description: All permissions
+    children:
+      - mobaicontroller.spawn
+      - mobaicontroller.spawn.mobtype
+      - mobaicontroller.spawn.random
+      - mobaicontroller.list
+      - mobaicontroller.info
+      - mobaicontroller.remove
+      - mobaicontroller.remove.uuid
+      - mobaicontroller.remove.nearest
+      - mobaicontroller.remove.farthest
+      - mobaicontroller.remove.random
+      - mobaicontroller.remove.all
+      - mobaicontroller.reload
+  mobaicontroller.spawn:
+    description: Spawn any type of mob, and also random mobs
+    children:
+      - mobaicontroller.spawn.mobtype
+      - mobaicontroller.spawn.random
+  mobaicontroller.spawn.mobtype:
+    description: Spawn specific mob types
+  mobaicontroller.spawn.random:
+    description: Spawn random mobs
+  mobaicontroller.list:
+    description: List spawned mobs
+  mobaicontroller.info:
+    description: Get more information about a mob
+  mobaicontroller.remove:
+    description: Remove mobs
+    children:
+      - mobaicontroller.remove.uuid
+      - mobaicontroller.remove.nearest
+      - mobaicontroller.remove.farthest
+      - mobaicontroller.remove.random
+      - mobaicontroller.remove.all
+  mobaicontroller.remove.uuid:
+    description: Remove mobs by UUID
+  mobaicontroller.remove.nearest:
+    description: Remove mobs by getting the nearest mob
+  mobaicontroller.remove.farthest:
+    description: Remove mobs by getting the farthest mob
+  mobaicontroller.remove.random:
+    description: Remove random mobs
+  mobaicontroller.remove.all:
+    description: Remove all mobs
+  mobaicontroller.reload:
+    description: Reload the plugin

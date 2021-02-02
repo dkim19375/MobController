@@ -1,0 +1,49 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'java'
+}
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+compileJava.options.encoding 'UTF-8'
+
+group 'me.dkim19375'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    group = 'me.dkim19375'
+    version = project.version
+
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    }
+
+    dependencies {
+        compileOnly 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
+        implementation 'org.jetbrains:annotations:16.0.2'
+    }
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand 'pluginVersion': version
+    }
+}
