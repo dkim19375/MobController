@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class Controller {
     private final Set<UUID> uuids = new HashSet<>();
@@ -111,7 +110,7 @@ public class Controller {
     }
 
     public void update() {
-        final Set<UUID> list = plugin.getMobsFile().getConfig().getKeys(false).stream().map(UUID::fromString).collect(Collectors.toSet());
+        final Set<UUID> list = convertStringToUUID(plugin.getMobsFile().getConfig().getKeys(false));
         for (final UUID uuid : new HashSet<>(list)) {
             final Entity entity = getEntity(uuid);
             if (entity == null) {
@@ -131,5 +130,19 @@ public class Controller {
 
         }
         clearAndAddMobs(list);
+    }
+
+    private Set<UUID> convertStringToUUID(Iterable<String> strings) {
+        Set<UUID> uuidSet = new HashSet<>();
+        for (String str : strings) {
+            try {
+                //noinspection ResultOfMethodCallIgnored
+                UUID.fromString(str);
+            } catch (IllegalArgumentException ignored) {
+                continue;
+            }
+            uuidSet.add(UUID.fromString(str));
+        }
+        return uuidSet;
     }
 }
