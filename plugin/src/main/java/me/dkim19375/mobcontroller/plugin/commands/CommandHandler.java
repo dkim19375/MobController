@@ -4,6 +4,7 @@ import me.dkim19375.dkim19375core.NumberUtils;
 import me.dkim19375.mobcontroller.plugin.MobController;
 import me.dkim19375.mobcontroller.plugin.util.Controller;
 import me.dkim19375.mobcontroller.plugin.util.CreatureTypeUtils;
+import me.dkim19375.mobcontroller.plugin.util.MobFileUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -74,7 +75,7 @@ public class CommandHandler implements CommandExecutor {
                     }
                     LivingEntity entity = (LivingEntity) p.getWorld().spawnEntity(p.getLocation(), getRandomEntityType());
                     plugin.getController().getMobs().add(entity.getUniqueId());
-                    addMobToFile(entity.getUniqueId());
+                    MobFileUtils.addMobToFile(plugin, entity.getUniqueId());
                     sender.sendMessage(ChatColor.GREEN + "Successfully spawned a random mob!");
                     return true;
                 }
@@ -90,7 +91,7 @@ public class CommandHandler implements CommandExecutor {
                 final EntityType creatureType = CreatureTypeUtils.getLowerCaseTypes().inverse().get(args[1].toLowerCase(Locale.ENGLISH));
                 LivingEntity entity = (LivingEntity) p.getWorld().spawnEntity(p.getLocation(), creatureType);
                 plugin.getController().getMobs().add(entity.getUniqueId());
-                addMobToFile(entity.getUniqueId());
+                MobFileUtils.addMobToFile(plugin, entity.getUniqueId());
                 sender.sendMessage(ChatColor.GREEN + "Successfully spawned a mob!");
                 return true;
             case "list":
@@ -198,7 +199,7 @@ public class CommandHandler implements CommandExecutor {
                             return true;
                         }
                         plugin.getController().removeMob(closestEntity.getUniqueId());
-                        removeMobFromFile(closestEntity.getUniqueId());
+                        MobFileUtils.removeMobFromFile(plugin, closestEntity.getUniqueId());
                         sender.sendMessage(ChatColor.GREEN + "Successfully removed the nearest mob!");
                         return true;
                     case "farthest":
@@ -229,7 +230,7 @@ public class CommandHandler implements CommandExecutor {
                             return true;
                         }
                         plugin.getController().removeMob(farthestEntity.getUniqueId());
-                        removeMobFromFile(farthestEntity.getUniqueId());
+                        MobFileUtils.removeMobFromFile(plugin, farthestEntity.getUniqueId());
                         sender.sendMessage(ChatColor.GREEN + "Successfully removed the farthest mob!");
                         return true;
                     case "random":
@@ -240,7 +241,7 @@ public class CommandHandler implements CommandExecutor {
                         Entity[] entities1 = plugin.getController().getMobs().stream().map(Controller::getEntity).distinct().toArray(Entity[]::new);
                         Entity entity1 = entities1[random.nextInt(entities1.length)];
                         plugin.getController().removeMob(entity1.getUniqueId());
-                        removeMobFromFile(entity1.getUniqueId());
+                        MobFileUtils.removeMobFromFile(plugin, entity1.getUniqueId());
                         sender.sendMessage(ChatColor.GREEN + "Successfully removed a random mob!");
                         return true;
                     case "all":
@@ -256,7 +257,7 @@ public class CommandHandler implements CommandExecutor {
                         Set<UUID> uuidSet = new HashSet<>(plugin.getController().getMobs());
                         for (UUID uuid : uuidSet) {
                             plugin.getController().removeMob(uuid);
-                            removeMobFromFile(uuid);
+                            MobFileUtils.removeMobFromFile(plugin, uuid);
                             count++;
                         }
                         sender.sendMessage(ChatColor.GREEN + "Successfully removed all mobs! (" + count + " mobs)");
@@ -272,7 +273,7 @@ public class CommandHandler implements CommandExecutor {
                     return true;
                 }
                 plugin.getController().removeMob(UUID.fromString(args[1]));
-                removeMobFromFile(UUID.fromString(args[1]));
+                MobFileUtils.removeMobFromFile(plugin, UUID.fromString(args[1]));
                 sender.sendMessage(ChatColor.GREEN + "Successfully removed the mob!");
                 return true;
             case "reload":
@@ -309,19 +310,5 @@ public class CommandHandler implements CommandExecutor {
         EntityType[] creatureTypes = CreatureTypeUtils.getNames().keySet().toArray(new EntityType[0]);
         int random = this.random.nextInt(creatureTypes.length);
         return creatureTypes[random];
-    }
-
-    private void addMobToFile(UUID uuid) {
-        List<String> strings = new ArrayList<>(plugin.getMobsFile().getConfig().getStringList("mobs"));
-        strings.add(uuid.toString());
-        plugin.getMobsFile().getConfig().set("mobs", strings);
-        plugin.getMobsFile().save();
-    }
-
-    private void removeMobFromFile(UUID uuid) {
-        List<String> strings = new ArrayList<>(plugin.getMobsFile().getConfig().getStringList("mobs"));
-        strings.remove(uuid.toString());
-        plugin.getMobsFile().getConfig().set("mobs", strings);
-        plugin.getMobsFile().save();
     }
 }

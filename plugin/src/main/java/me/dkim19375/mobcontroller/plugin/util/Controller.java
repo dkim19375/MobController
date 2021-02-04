@@ -21,6 +21,12 @@ public class Controller {
 
     public Controller(final MobController plugin) {
         this.plugin = plugin;
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            if (MobFileUtils.isModified()) {
+                plugin.getMobsFile().save();
+                MobFileUtils.setModified(false);
+            }
+        }, 1L, 1L);
         task = (async) -> {
             if (plugin.getConfig().getBoolean("async")) {
                 if (!async) {
@@ -127,7 +133,6 @@ public class Controller {
         }
         for (UUID uuid : uuids) {
             MobFileUtils.getConfigurationSection(plugin, uuid);
-
         }
         clearAndAddMobs(list);
     }
