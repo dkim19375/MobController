@@ -50,7 +50,6 @@ public class MobFileUtils {
     }
 
     public static EntityEquipment getEntityEquipment(final MobController plugin, final UUID mob) {
-        EntityType.VILLAGER
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         try {
             return ((EntityEquipment) section.get("entity-equipment"));
