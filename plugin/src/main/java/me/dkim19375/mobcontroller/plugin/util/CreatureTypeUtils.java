@@ -1,4 +1,4 @@
-package me.dkim19375.mobaicontroller.plugin.util;
+package me.dkim19375.mobcontroller.plugin.util;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

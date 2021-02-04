@@ -3,10 +3,6 @@ plugins {
     id 'java'
 }
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-compileJava.options.encoding 'UTF-8'
-
 group 'me.dkim19375'
 version '1.0-SNAPSHOT'
 
@@ -27,7 +23,7 @@ subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
 
     group = 'me.dkim19375'
-    version = project.version
+    project.version = parent.version
 
     sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -43,12 +39,15 @@ subprojects {
 
     dependencies {
         compileOnly 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
-        implementation 'org.jetbrains:annotations:16.0.2'
+        compileOnly 'org.jetbrains:annotations:20.1.0'
     }
 }
 
-processResources {
-    from(sourceSets.main.resources.srcDirs) {
-        expand 'pluginVersion': version
-    }
+task copyFile(type: Copy) {
+    new File('../.TestServers/1.16/plugins/' + project.name + '-' + project.version + '-all.jar').delete()
+    from('build/libs/' + project.name + '-' + project.version + '-all.jar')
+    into('../.TestServers/1.16/plugins')
+    include('*.jar')
 }
+
+shadowJar.finalizedBy copyFile

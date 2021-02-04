@@ -1,7 +1,7 @@
-package me.dkim19375.mobaicontroller.plugin.listeners;
+package me.dkim19375.mobcontroller.plugin.listeners;
 
-import me.dkim19375.mobaicontroller.plugin.MobAIController;
-import me.dkim19375.mobaicontroller.plugin.attributes.AbstractAttributes;
+import me.dkim19375.mobcontroller.plugin.MobController;
+import me.dkim19375.mobcontroller.plugin.attributes.AbstractAttributes;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,10 +10,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import java.util.UUID;
 
 public class EntityDamageListener implements Listener {
-    private final MobAIController plugin;
+    private final MobController plugin;
 
 
-    public EntityDamageListener(MobAIController plugin) {
+    public EntityDamageListener(MobController plugin) {
         this.plugin = plugin;
     }
 

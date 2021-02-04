@@ -1,9 +1,10 @@
-main: me.dkim19375.mobaicontroller.MobAIController
-name: MobAIController
+main: me.dkim19375.mobcontroller.plugin.MobController
+name: MobController
 version: ${pluginVersion}
-description: Control mob's AI!
+description: Control mob with things like its AI!
 author: dkim19375
 depend: [  ]
+api-version: 1.13
 
 commands:
   mobaicontroller:

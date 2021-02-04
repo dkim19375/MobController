@@ -1,8 +1,9 @@
-package me.dkim19375.mobaicontroller.plugin.commands;
+package me.dkim19375.mobcontroller.plugin.commands;
 
-import me.dkim19375.mobaicontroller.plugin.MobAIController;
-import me.dkim19375.mobaicontroller.plugin.util.CreatureTypeUtils;
-import me.dkim19375.mobaicontroller.plugin.util.Controller;
+import me.dkim19375.dkim19375core.NumberUtils;
+import me.dkim19375.mobcontroller.plugin.MobController;
+import me.dkim19375.mobcontroller.plugin.util.Controller;
+import me.dkim19375.mobcontroller.plugin.util.CreatureTypeUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -19,14 +20,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor {
-    private final MobAIController plugin;
-    private final Random random = new Random();
-
     private static final String NO_PERMISSION = ChatColor.RED + "You do not have permission to run this command!";
     private static final String TOO_MANY_ARGS = ChatColor.RED + "Too many arguments!";
     private static final String LITTLE_ARGS = ChatColor.RED + "Not enough arguments!";
+    private final MobController plugin;
+    private final Random random = new Random();
 
-    public CommandHandler(MobAIController plugin) {
+    public CommandHandler(MobController plugin) {
         this.plugin = plugin;
     }
 
@@ -104,7 +104,11 @@ public class CommandHandler implements CommandExecutor {
                     return true;
                 }
                 sender.sendMessage(ChatColor.GREEN + "Mobs:");
-                sender.sendMessage(ChatColor.GREEN + "Tip: You can click one of the UUIDs to copy it! (The uuid will show in the chat)");
+                if (sender instanceof Player) {
+                    if (NumberUtils.percentChance(80)) {
+                        sender.sendMessage(ChatColor.GREEN + "Tip: You can click one of the UUIDs to copy it! (The uuid will show in the chat)");
+                    }
+                }
                 final Set<Entity> mobs = new HashSet<>();
                 for (UUID uuid : plugin.getController().getMobs()) {
                     if (Controller.getEntity(uuid) == null) {
@@ -299,6 +303,7 @@ public class CommandHandler implements CommandExecutor {
         sender.sendMessage(ChatColor.AQUA + "/" + label + " info <uuid> - Get more information about a mob");
         sender.sendMessage(ChatColor.AQUA + "/" + label + " remove <<uuid>/nearest/farthest/random> - Remove a mob");
     }
+
 
     private EntityType getRandomEntityType() {
         EntityType[] creatureTypes = CreatureTypeUtils.getNames().keySet().toArray(new EntityType[0]);

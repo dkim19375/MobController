@@ -6,3 +6,9 @@ dependencies {
     implementation 'com.github.dkim19375:dkim19375Core:2.3.3'
     implementation project(':api')
 }
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand 'pluginVersion': version
+    }
+}

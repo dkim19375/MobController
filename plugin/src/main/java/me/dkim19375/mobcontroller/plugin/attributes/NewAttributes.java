@@ -1,4 +1,4 @@
-package me.dkim19375.mobaicontroller.plugin.attributes;
+package me.dkim19375.mobcontroller.plugin.attributes;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;

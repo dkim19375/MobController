@@ -1,10 +1,10 @@
-package me.dkim19375.mobaicontroller.plugin.commands;
+package me.dkim19375.mobcontroller.plugin.commands;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import me.dkim19375.mobaicontroller.plugin.MobAIController;
-import me.dkim19375.mobaicontroller.plugin.util.CreatureTypeUtils;
+import me.dkim19375.mobcontroller.plugin.MobController;
+import me.dkim19375.mobcontroller.plugin.util.CreatureTypeUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -14,11 +14,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class TabCompletionHandler implements TabCompleter {
-    private final MobAIController plugin;
+    private final MobController plugin;
 
     private final HashMultimap<String, String> completesListMap;
 
-    public TabCompletionHandler(MobAIController plugin) {
+    public TabCompletionHandler(MobController plugin) {
         this.plugin = plugin;
         completesListMap = HashMultimap.create();
         add("core", "help", "spawn", "list", "reload", "remove", "info");
