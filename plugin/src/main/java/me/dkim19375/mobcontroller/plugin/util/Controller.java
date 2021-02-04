@@ -21,6 +21,7 @@ public class Controller {
 
     public Controller(final MobController plugin) {
         this.plugin = plugin;
+        update();
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
             if (MobFileUtils.isModified()) {
                 plugin.getMobsFile().save();

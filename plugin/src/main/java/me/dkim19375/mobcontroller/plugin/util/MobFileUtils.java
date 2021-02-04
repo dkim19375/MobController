@@ -1,9 +1,9 @@
 package me.dkim19375.mobcontroller.plugin.util;
 
 import me.dkim19375.mobcontroller.plugin.MobController;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.EntityEquipment;
 
 import java.util.UUID;
@@ -50,6 +50,7 @@ public class MobFileUtils {
     }
 
     public static EntityEquipment getEntityEquipment(final MobController plugin, final UUID mob) {
+        EntityType.VILLAGER
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         try {
             return ((EntityEquipment) section.get("entity-equipment"));
