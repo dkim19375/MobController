@@ -1,11 +1,12 @@
-package me.dkim19375.mobcontroller.plugin.util;
+package me.dkim19375.mobaicontroller.plugin.util;
 
-import me.dkim19375.mobcontroller.plugin.MobController;
+import me.dkim19375.mobaicontroller.plugin.MobAIController;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.EntityEquipment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -16,18 +17,22 @@ import java.util.function.Consumer;
 
 public class Controller {
     private final Set<UUID> uuids = new HashSet<>();
-    private final MobController plugin;
+    private final MobAIController plugin;
     private final Consumer<Boolean> task;
 
-    public Controller(final MobController plugin) {
+    public Controller(final MobAIController plugin) {
         this.plugin = plugin;
-        update();
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
-            if (MobFileUtils.isModified()) {
-                plugin.getMobsFile().save();
-                MobFileUtils.setModified(false);
+            update();
+            try {
+                if (MobFileUtils.isModified()) {
+                    plugin.getMobsFile().save();
+                    MobFileUtils.setModified(false);
+                }
+            } catch (Exception ignored) {
+                // I have no idea why it sometimes gives an exception
             }
-        }, 1L, 1L);
+        }, 20L, 20L);
         task = (async) -> {
             if (plugin.getConfig().getBoolean("async")) {
                 if (!async) {
@@ -38,7 +43,7 @@ public class Controller {
                     return;
                 }
             }
-            for (UUID uuid : uuids) {
+            for (UUID uuid : new HashSet<>(uuids)) {
                 final Entity entity = getEntity(uuid);
                 if (entity == null) {
                     continue;
@@ -49,6 +54,13 @@ public class Controller {
                 final LivingEntity livingEntity = (LivingEntity) entity;
                 if (!CreatureTypeUtils.getNames().containsKey(livingEntity.getType())) {
                     continue;
+                }
+                final EntityEquipment equipment = MobFileUtils.getEntityEquipment(plugin, uuid);
+                if (equipment != null) {
+                    if (equipment.equals(livingEntity.getEquipment())) {
+                        System.out.println("Equals!");
+                    }
+                    MobFileUtils.setEntityEquipment(plugin, uuid, livingEntity.getEquipment());
                 }
                 if (async) {
                     Bukkit.getScheduler().runTask(plugin, () -> useLocation(livingEntity));

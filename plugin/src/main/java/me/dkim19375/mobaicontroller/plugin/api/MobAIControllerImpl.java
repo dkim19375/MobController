@@ -1,15 +1,15 @@
-package me.dkim19375.mobcontroller.plugin.api;
+package me.dkim19375.mobaicontroller.plugin.api;
 
-import me.dkim19375.mobcontroller.api.MobControllerAPI;
-import me.dkim19375.mobcontroller.plugin.MobController;
+import me.dkim19375.mobaicontroller.plugin.MobAIController;
+import me.dkim19375.mobaicontroller.api.MobAIControllerAPI;
 
 import java.util.Set;
 import java.util.UUID;
 
-public class MobControllerImpl implements MobControllerAPI {
-    private final MobController plugin;
+public class MobAIControllerImpl implements MobAIControllerAPI {
+    private final MobAIController plugin;
 
-    public MobControllerImpl(MobController plugin) {
+    public MobAIControllerImpl(MobAIController plugin) {
         this.plugin = plugin;
     }
 

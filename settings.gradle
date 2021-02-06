@@ -1,4 +1,3 @@
-rootProject.name = 'MobController'
+rootProject.name = 'MobAIController'
 include ':plugin'
 include ':api'
-

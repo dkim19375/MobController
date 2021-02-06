@@ -1,4 +1,4 @@
-package me.dkim19375.mobcontroller.plugin.attributes;
+package me.dkim19375.mobaicontroller.plugin.attributes;
 
 import org.bukkit.entity.LivingEntity;
 

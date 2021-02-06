@@ -1,26 +1,26 @@
-package me.dkim19375.mobcontroller.plugin;
+package me.dkim19375.mobaicontroller.plugin;
 
 import me.dkim19375.dkim19375core.ConfigFile;
 import me.dkim19375.dkim19375core.CoreJavaPlugin;
-import me.dkim19375.mobcontroller.api.MobControllerAPI;
-import me.dkim19375.mobcontroller.plugin.api.MobControllerImpl;
-import me.dkim19375.mobcontroller.plugin.commands.TabCompletionHandler;
-import me.dkim19375.mobcontroller.plugin.commands.CommandHandler;
-import me.dkim19375.mobcontroller.plugin.listeners.EntityDamageListener;
-import me.dkim19375.mobcontroller.plugin.util.Controller;
+import me.dkim19375.mobaicontroller.plugin.commands.CommandHandler;
+import me.dkim19375.mobaicontroller.plugin.util.Controller;
+import me.dkim19375.mobaicontroller.api.MobAIControllerAPI;
+import me.dkim19375.mobaicontroller.plugin.api.MobAIControllerImpl;
+import me.dkim19375.mobaicontroller.plugin.commands.TabCompletionHandler;
+import me.dkim19375.mobaicontroller.plugin.listeners.EntityDamageListener;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 
 import java.util.logging.Level;
 
-public class MobController extends CoreJavaPlugin {
+public class MobAIController extends CoreJavaPlugin {
     private Controller controller;
     private final ConfigFile mobsFile = new ConfigFile(this, "mobs.yml");
-    private static MobControllerAPI api;
+    private static MobAIControllerAPI api;
 
     @Override
     public void onEnable() {
-        api = new MobControllerImpl(this);
+        api = new MobAIControllerImpl(this);
         controller = new Controller(this);
         saveDefaultConfig();
         mobsFile.createConfig();
@@ -57,7 +57,7 @@ public class MobController extends CoreJavaPlugin {
     }
 
     @SuppressWarnings("unused")
-    public static MobControllerAPI getAPI() {
+    public static MobAIControllerAPI getAPI() {
         return api;
     }
 }

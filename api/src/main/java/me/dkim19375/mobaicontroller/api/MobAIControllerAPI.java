@@ -1,9 +1,9 @@
-package me.dkim19375.mobcontroller.api;
+package me.dkim19375.mobaicontroller.api;
 
 import java.util.Set;
 import java.util.UUID;
 
-public interface MobControllerAPI {
+public interface MobAIControllerAPI {
     Set<UUID> getControlledMobs();
 
     boolean removeMob(UUID mob);

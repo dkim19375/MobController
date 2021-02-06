@@ -1,20 +1,17 @@
-package me.dkim19375.mobcontroller.plugin.commands;
+package me.dkim19375.mobaicontroller.plugin.commands;
 
 import me.dkim19375.dkim19375core.NumberUtils;
-import me.dkim19375.mobcontroller.plugin.MobController;
-import me.dkim19375.mobcontroller.plugin.util.Controller;
-import me.dkim19375.mobcontroller.plugin.util.CreatureTypeUtils;
-import me.dkim19375.mobcontroller.plugin.util.MobFileUtils;
+import me.dkim19375.mobaicontroller.plugin.MobAIController;
+import me.dkim19375.mobaicontroller.plugin.util.Controller;
+import me.dkim19375.mobaicontroller.plugin.util.CreatureTypeUtils;
+import me.dkim19375.mobaicontroller.plugin.util.MobFileUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -24,10 +21,10 @@ public class CommandHandler implements CommandExecutor {
     private static final String NO_PERMISSION = ChatColor.RED + "You do not have permission to run this command!";
     private static final String TOO_MANY_ARGS = ChatColor.RED + "Too many arguments!";
     private static final String LITTLE_ARGS = ChatColor.RED + "Not enough arguments!";
-    private final MobController plugin;
+    private final MobAIController plugin;
     private final Random random = new Random();
 
-    public CommandHandler(MobController plugin) {
+    public CommandHandler(MobAIController plugin) {
         this.plugin = plugin;
     }
 

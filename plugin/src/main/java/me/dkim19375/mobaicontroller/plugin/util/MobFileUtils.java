@@ -1,10 +1,10 @@
-package me.dkim19375.mobcontroller.plugin.util;
+package me.dkim19375.mobaicontroller.plugin.util;
 
-import me.dkim19375.mobcontroller.plugin.MobController;
+import me.dkim19375.mobaicontroller.plugin.MobAIController;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.EntityEquipment;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -22,34 +22,35 @@ public class MobFileUtils {
         modified = isModified;
     }
 
-    public static void addMobToFile(final MobController plugin, UUID mob) {
+    public static void addMobToFile(final MobAIController plugin, UUID mob) {
         getConfigurationSection(plugin, mob);
     }
 
-    public static void removeMobFromFile(final MobController plugin, UUID mob) {
+    public static void removeMobFromFile(final MobAIController plugin, UUID mob) {
         if (getConfigurationSection(plugin).contains(mob.toString())) {
             getConfigurationSection(plugin).set(mob.toString(), null);
         }
     }
 
-    public static void setInvincible(final MobController plugin, final UUID mob, final boolean invincible) {
+    public static void setInvincible(final MobAIController plugin, final UUID mob, final boolean invincible) {
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         section.set("invincible", invincible);
         modified = true;
     }
 
-    public static boolean isInvincible(final MobController plugin, final UUID mob) {
+    public static boolean isInvincible(final MobAIController plugin, final UUID mob) {
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         return section.getBoolean("invincible");
     }
 
-    public static void setEntityEquipment(final MobController plugin, final UUID mob, final EntityEquipment equipment) {
+    public static void setEntityEquipment(final MobAIController plugin, final UUID mob, final EntityEquipment equipment) {
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         section.set("entity-equipment", equipment);
         modified = true;
     }
 
-    public static EntityEquipment getEntityEquipment(final MobController plugin, final UUID mob) {
+    @Nullable
+    public static EntityEquipment getEntityEquipment(final MobAIController plugin, final UUID mob) {
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         try {
             return ((EntityEquipment) section.get("entity-equipment"));
@@ -58,22 +59,22 @@ public class MobFileUtils {
         }
     }
 
-    public static void setLocation(final MobController plugin, final UUID mob, final Location loc) {
+    public static void setLocation(final MobAIController plugin, final UUID mob, final Location loc) {
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         section.set("location", loc);
         modified = true;
     }
 
-    public static Location getLocation(final MobController plugin, final UUID mob) {
+    public static Location getLocation(final MobAIController plugin, final UUID mob) {
         final ConfigurationSection section = getConfigurationSection(plugin, mob);
         return section.getLocation("location");
     }
 
-    public static ConfigurationSection getConfigurationSection(final MobController plugin) {
+    public static ConfigurationSection getConfigurationSection(final MobAIController plugin) {
         return plugin.getMobsFile().getConfig();
     }
 
-    public static ConfigurationSection getConfigurationSection(final MobController plugin, final UUID mob) {
+    public static ConfigurationSection getConfigurationSection(final MobAIController plugin, final UUID mob) {
         ConfigurationSection section = plugin.getMobsFile().getConfig().getConfigurationSection(mob.toString()) == null
                 ? plugin.getMobsFile().getConfig().createSection(mob.toString())
                 : plugin.getMobsFile().getConfig().getConfigurationSection(mob.toString());
